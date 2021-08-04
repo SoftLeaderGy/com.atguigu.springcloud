@@ -11,6 +11,14 @@
 
     <artifactId>cloud-provider-payment8001</artifactId>
     <dependencies>
+        <!--cloud-api-commons包是自己定义的一个服务，并将maven打包-->
+        <!-- 引入自己定义的api通用包，可以使用Payment 支付Entity-->
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>cloud-api-commons</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
