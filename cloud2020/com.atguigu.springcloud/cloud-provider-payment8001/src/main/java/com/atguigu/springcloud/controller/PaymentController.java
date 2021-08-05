@@ -6,8 +6,12 @@ import com.atguigu.springcloud.service.PayMentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.client.ServiceInstance;
+import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
+import java.util.List;
 /**
  * @Description:
  * @Author: Yang.Guo
@@ -22,6 +26,10 @@ public class PaymentController {
 
     @Value("${server.port}")
     private String serverPort;
+
+//   将DiscoveryClient注入到spring中，就可以获取服务中的信息
+    @Resource
+    private DiscoveryClient discoveryClient;
 
     @PostMapping(value = "/payment/create")
     public CommonResult create(@RequestBody Payment payment){
@@ -47,5 +55,20 @@ public class PaymentController {
     }
 
 
+    @GetMapping("/payment/discovery")
+    public Object getDiscovery(){
+
+        List<String> services = discoveryClient.getServices();
+        for (String service : services) {
+            log.info(service);
+
+        }
+        List<ServiceInstance> instances = discoveryClient.getInstances("CLOUD-PAYMENT-SERVICE");
+        for (ServiceInstance instance : instances) {
+            log.info(instance.getHost(),instance.getHost(),instance.getUri());
+        }
+        return this.discoveryClient;
+
+    }
 
 }
