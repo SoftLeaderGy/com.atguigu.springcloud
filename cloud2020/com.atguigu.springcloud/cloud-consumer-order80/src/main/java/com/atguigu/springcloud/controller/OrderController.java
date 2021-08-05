@@ -21,8 +21,10 @@ import javax.annotation.Resource;
 public class OrderController {
 
 
-    // 定义要调用的服务地址
-    private static final String PAYMENT_URL = "http://localhost:8001";
+    // 定义要调用的服务地址,
+    // 但是集群环境搭建起来后就不能将地址写死，应该写注册在eureka中的服务
+//    private static final String PAYMENT_URL = "http://localhost:8001";
+    private static final String PAYMENT_URL = "http://CLOUD-PAYMENT-SERVICE";
 
     // 注入restTemplate
     @Resource
@@ -40,7 +42,7 @@ public class OrderController {
 
     @GetMapping("/consumer/payment/get/{id}")
     public CommonResult<Payment> getPayment(@PathVariable Long id){
-        return restTemplate.getForObject(PAYMENT_URL+"payment/get/"+id,CommonResult.class);
+        return restTemplate.getForObject(PAYMENT_URL+"/payment/get/"+id,CommonResult.class);
     }
 
 }
