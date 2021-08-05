@@ -26,6 +26,11 @@ eureka:
       #设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址。
 #      defaultZone: http://localhost:7001/eureka/
       defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/
+#      配置服务注册进eureka后，点击服务不显示主机的问题，不是必须要配。
+  instance:
+    instance-id: payment8001
+#    访问路径可以显示IP地址
+    prefer-ip-address: true
 #mybatis整合
 mybatis:
   mapperLocations: classpath:mapper/*.xml
