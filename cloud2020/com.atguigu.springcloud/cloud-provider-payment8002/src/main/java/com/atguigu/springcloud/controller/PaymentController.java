@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @Description:
  * @Author: Yang.Guo
@@ -47,5 +49,11 @@ public class PaymentController {
     }
 
 
+    // 测试feign调用超时
+    @GetMapping("/payment/feign/timeout")
+    public String paymentFeignTimeout() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
+        return serverPort;
+    }
 
 }
