@@ -34,7 +34,7 @@ public class paymentService {
     // 表示服务降级，方法：paymentInfo_Timeout 出事了不会继续等待，而是执行fallbackMethod里边的 "paymentInfo_TimeoutHandler"方法
     // 也就是说添加了@HystrixCommand以后如果别添加的方法出事了会找fallbackMethod里边配置的方法进行"兜底"
     @HystrixCommand(fallbackMethod = "paymentInfo_TimeoutHandler",commandProperties = {
-            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "3000") //设置服务调用超时时间的峰值，为3秒钟，如果超时时间大于3秒就会进行服务熔断。
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds",value = "5000") //设置服务调用超时时间的峰值，为3秒钟，如果超时时间大于3秒就会进行服务熔断。
     })
     public String paymentInfo_Timeout(Integer id){
 
@@ -48,7 +48,9 @@ public class paymentService {
         /**
          * 模拟服务报错，进行服务降级
          */
-        int a = 10/0;
+//        int a = 10/0;
+//        return "线程池： " + Thread.currentThread().getName() + "paymentInfo_Timeout,id: " + id +"\t"+ "哈哈";
+        TimeUnit.SECONDS.sleep(3);
         return "线程池： " + Thread.currentThread().getName() + "paymentInfo_Timeout,id: " + id +"\t"+ "哈哈";
     }
 
